@@ -2,7 +2,6 @@ from flask import Flask, request
 from modules.init import init_modules
 
 from api.process_xml import *
-from util.utils import *
 
 app = Flask(__name__)
 env = init_modules()

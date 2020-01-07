@@ -1,6 +1,7 @@
 from flask import Flask, request
 from modules.init import init_modules
 from api.process_xml import *
+from api.process_with_tags import get_docs_with_tag_name
 
 app = Flask(__name__)
 env = init_modules()
@@ -17,8 +18,7 @@ def upload_file():
 # Get document by tag
 @app.route('/tags/<tag_name>', methods=['GET'])
 def get_by_tag(tag_name):
-
-    return {'tag_name': tag_name}, 200
+    return get_docs_with_tag_name(env, tag_name)
 
 
 if __name__ == '__main__':

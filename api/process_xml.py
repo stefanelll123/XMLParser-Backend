@@ -12,16 +12,14 @@ def process_xml(env, xml_string, file_name):
     meta = info['meta']
     text_info = info['dictt']
 
+    meta['content'] = xml_string
+
     # Insert data into the database
     try:
         mongo = env.get('mongo')
 
         mongo.meta.insert(meta)
         mongo.text.insert(text_info)
-        mongo.xml_content.insert({
-            'file_name': file_name, 
-            'content': xml_string
-        })
     except:
         return {'error': 'Could not insert XML data'}, 500
 

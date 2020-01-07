@@ -5,6 +5,7 @@ Requirements
 ------------
 
 - Flask (`pip install flask`).
+- Dotenv (`pip install python-dotenv`).
 - Dotenv-CLI (`pip install dotenv-cli`).
 - Mongo Client (`pip install pymongo`).
 

@@ -1,6 +1,5 @@
 from flask import Flask, request
 from modules.init import init_modules
-
 from api.process_xml import *
 
 app = Flask(__name__)
@@ -17,10 +16,9 @@ def upload_file():
 
 # Get document by tag
 @app.route('/tags/<tag_name>', methods=['GET'])
-def get_by_tag():
-    tag_name = request.view_args['tag_name']
+def get_by_tag(tag_name):
 
-    return 200
+    return {'tag_name': tag_name}, 200
 
 
 if __name__ == '__main__':

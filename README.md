@@ -9,7 +9,6 @@ Requirements
 - Dotenv-CLI (`pip install dotenv-cli`).
 - Mongo Client (`pip install pymongo`).
 
-
 Installation
 ------------
 

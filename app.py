@@ -18,7 +18,7 @@ def upload_file():
 # Get document by tag
 @app.route('/tags/<tag_name>', methods=['GET'])
 def get_by_tag():
-    tag_name = request.query_string.tag_named
+    tag_name = request.view_args['tag_name']
 
     return 200
 

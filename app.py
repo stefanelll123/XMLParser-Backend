@@ -2,6 +2,7 @@ from flask import Flask, request
 from modules.init import init_modules
 from api.process_xml import *
 from api.process_with_tags import get_docs_with_tag_name
+from api.process_with_depth import get_docs_with_depth
 
 app = Flask(__name__)
 env = init_modules()
@@ -16,9 +17,16 @@ def upload_file():
 
 
 # Get document by tag
-@app.route('/tags/<tag_name>', methods=['GET'])
-def get_by_tag(tag_name):
+@app.route('/tags', methods=['GET'])
+def get_by_tag():
+    tag_name = request.args.get('tag_name')
     return get_docs_with_tag_name(env, tag_name)
+
+# Get document by depth (doc>=depth)
+@app.route('/depths', methods=['GET'])
+def get_by_depth():
+    depth = request.args.get('depth')
+    return get_docs_with_depth(env, depth)
 
 
 if __name__ == '__main__':

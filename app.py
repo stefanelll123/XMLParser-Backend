@@ -7,6 +7,7 @@ from api.process_with_tags import get_docs_with_tag_name
 from api.process_with_depth import get_docs_with_depth
 from api.process_with_word_and_tag import get_docs_with_word_and_tag
 from api.highlight_with_attribute import highlight_doc_with_attribute
+from api.get_attr_values import get_attr_values
 
 app = Flask(__name__)
 env = init_modules()
@@ -55,6 +56,13 @@ def get_by_size():
     size = request.args.get("size")
     return get_docs_by_size(env, size)
 
+# Get documents by number of nodes
+@app.route('/docs', methods=['GET'])
+def get_by_attr_values():
+    attr = request.args.get("attr")
+    value = request.args.get("value")
+
+    return get_attr_values(env, attr, value)
 
 # Highlight an existent XML file that contains a given attribute X with a given value Y
 @app.route('/highlight', methods=['GET'])

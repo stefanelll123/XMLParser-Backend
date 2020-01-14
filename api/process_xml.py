@@ -1,7 +1,6 @@
 import xml.etree.ElementTree as ET
 from util.constants import *
 from util.utils import *
-from util.constants import *
 
 
 def process_xml(env, xml_string, file_name):

@@ -6,9 +6,11 @@ from api.process_xml import *
 from api.process_with_tags import get_docs_with_tag_name
 from api.process_with_depth import get_docs_with_depth
 from api.process_with_word_and_tag import get_docs_with_word_and_tag
+from api.highlight_with_attribute import highlight_doc_with_attribute
 
 app = Flask(__name__)
 env = init_modules()
+
 
 # File processing
 @app.route('/upload_file', methods=['POST'])
@@ -52,6 +54,14 @@ def get_by_word_in_tag():
 def get_by_size():
     size = request.args.get("size")
     return get_docs_by_size(env, size)
+
+
+# Highlight a XML file that contains a given attribute X with a given value Y
+@app.route('/highlight', methods=['GET'])
+def highlight_with_attribute():
+    attribute = request.args.get('attribute')
+    value = request.args.get('value')
+    return highlight_doc_with_attribute(attribute, value)
 
 
 # Run

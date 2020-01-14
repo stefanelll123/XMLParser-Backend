@@ -6,6 +6,7 @@ from api.process_xml import *
 from api.process_with_tags import get_docs_with_tag_name
 from api.process_with_depth import get_docs_with_depth
 from api.process_with_word_and_tag import get_docs_with_word_and_tag
+from api.test import *
 
 app = Flask(__name__)
 env = init_modules()
@@ -53,6 +54,10 @@ def get_by_size():
     size = request.args.get("size")
     return get_docs_by_size(env, size)
 
+@app.route('/test', methods=['GET'])
+def test():
+    result = test1()
+    return {"status": 0}, 200
 
 # Run
 if __name__ == '__main__':

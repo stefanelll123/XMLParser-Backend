@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import os
 
 def init_mongo_client():
-    URI = os.getenv('MONGO_URI')
+    URI = "mongodb+srv://cityride:cityride@cluster0-xylx4.mongodb.net/ai"
 
     if not URI or URI == '':
         raise ValueError('Wrong Mongo URI provided!')

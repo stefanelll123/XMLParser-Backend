@@ -12,16 +12,15 @@ def highlight_doc_with_attribute(file_id, attribute, value):
     except OSError:
         return {'status': 0, 'error': 'File not found.'}, 404
 
-    # check if file meets the condition
+    # if file meets the condition
     if search_string in content:
-        # get the position of the string
-        position = content.find(search_string)
-
-        # highlight the content in new var
-        highlighted = content[:position] + ' style="background-color: yellow;" ' + content[position:]
+        # replace all
+        highlighted = content.replace(search_string, f'style="background-color: yellow;" {search_string}')
 
         # return result
         return {'status': 0, 'content': highlighted}, 200
 
-    # File found but condition was not satisfied
+    # file found but condition not satisfied
     return {'status': 0}, 204
+
+

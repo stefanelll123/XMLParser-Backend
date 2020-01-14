@@ -59,7 +59,7 @@ def get_by_size():
 # Highlight an existent XML file that contains a given attribute X with a given value Y
 @app.route('/highlight', methods=['GET'])
 def highlight_with_attribute():
-    file_id = request.args.get('id')
+    file_id = request.args.get('_id')
     attribute = request.args.get('attribute')
     value = request.args.get('value')
     return highlight_doc_with_attribute(file_id, attribute, value)

@@ -10,7 +10,7 @@ from api.process_with_word_and_tag import get_docs_with_word_and_tag
 app = Flask(__name__)
 env = init_modules()
 
-
+# File processing
 @app.route('/upload_file', methods=['POST'])
 def upload_file():
     if not request.json or not ('file_name' in request.json and 'content' in request.json):
@@ -47,7 +47,7 @@ def get_by_word_in_tag():
     return get_docs_with_word_and_tag(env, word, tag_name)
 
 
-# Get documents by tag size
+# Get documents by number of nodes
 @app.route('/elements', methods=['GET'])
 def get_by_size():
     size = request.args.get("size")

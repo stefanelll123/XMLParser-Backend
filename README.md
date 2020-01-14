@@ -8,6 +8,7 @@ Requirements
 - Dotenv (`pip install python-dotenv`).
 - Dotenv-CLI (`pip install dotenv-cli`).
 - Mongo Client (`pip install pymongo`).
+- DNS (`pip install dnspython`).
 
 
 Installation

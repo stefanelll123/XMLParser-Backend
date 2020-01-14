@@ -59,7 +59,7 @@ def get_by_size():
 # Get documents by number of nodes
 @app.route('/docs', methods=['GET'])
 def get_by_attr_values():
-    attr = request.args.get("attr")
+    attr = request.args.get("attribute")
     value = request.args.get("value")
 
     return get_attr_values(env, attr, value)

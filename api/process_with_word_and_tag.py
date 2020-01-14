@@ -10,7 +10,7 @@ def get_docs_with_word_and_tag(env, word, tag_name):
         # query.add(tag_name, {'$exists': True})
 
         # searching word in tag
-        cursor = mongo.text.find({tag_name: {'$exists': True}}, {'_id': 0, 'file_name': 0})
+        cursor = mongo.text.find({tag_name: {'$exists': True}})
 
         docs = list(cursor)
         new_docs = list()
@@ -18,9 +18,10 @@ def get_docs_with_word_and_tag(env, word, tag_name):
         if word:
             for doc in docs:
                 for property in doc:
-                    for text in doc[property]:
-                        if word in text:
-                            new_docs.append(doc)
+                    if property != "_id" and property != "fie_name":
+                        for text in doc[property]:
+                            if word in text:
+                                new_docs.append({"_id": str(doc.get("_id")), "file_name": str(doc.get("file_name"))})
 
             return {'status': 0, 'docs': new_docs}, 200
         else:

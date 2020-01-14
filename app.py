@@ -1,5 +1,7 @@
 from flask import Flask, request
 from modules.init import init_modules
+from api.get_docs_by_size import *
+
 from api.process_xml import *
 from api.process_with_tags import get_docs_with_tag_name
 from api.process_with_depth import get_docs_with_depth
@@ -43,6 +45,12 @@ def get_by_word_in_tag():
 
     # search?tag_name=x&word=z
     return get_docs_with_word_and_tag(env, word, tag_name)
+
+
+@app.route('/elements', methods=['GET'])
+def get_by_size():
+    size = request.args.get("size")
+    return get_docs_by_size(env, size)
 
 
 if __name__ == '__main__':

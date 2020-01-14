@@ -27,7 +27,7 @@ def process_xml(env, xml_string, file_name):
         with open(f'{PATH}/{file_name_with_id}.xml', 'x') as xml_file:
             xml_file.write(xml_string)
     except OSError:
-        return {'error": f"{file_name} already exists'}, 500
+        return {'error': f'{file_name} already exists'}, 500
     except Exception as e:
         return {'error': 'Could not insert XML data'}, 500
 

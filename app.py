@@ -47,11 +47,13 @@ def get_by_word_in_tag():
     return get_docs_with_word_and_tag(env, word, tag_name)
 
 
+# Get documents by tag size
 @app.route('/elements', methods=['GET'])
 def get_by_size():
     size = request.args.get("size")
     return get_docs_by_size(env, size)
 
 
+# Run
 if __name__ == '__main__':
     app.run(debug=True)

@@ -45,7 +45,7 @@ API Helper
     GET /depths?depth=[depth]
     
     
-    # Get documents by tag size
+    # Get documents by number of nodes
     GET /elements?size=[size]
     
     

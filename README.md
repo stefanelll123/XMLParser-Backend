@@ -61,3 +61,9 @@ API Helper
         + 200 - {"status": 0, "content": [highlighted_content] }
     
     
+    # Get documents by attribute with assigned value
+    GET /docs?attribute=[attribute]&value=[value]
+    Returns:
+        + 500 - {'error': 'Could not process files'}
+        + 200 - {'status': 0, 'docs': [files]}
+    

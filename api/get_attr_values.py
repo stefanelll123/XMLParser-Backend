@@ -27,8 +27,13 @@ def get_attr_values(env, attr, value):
                 content = f.read()
 
                 if contains(content, attr, value):
-                    info = mongo.meta.find_one({'_id': ObjectId("5e1e300c3f31de83e5ed8bfa")}, {'_id': 0, 'content': 0})
-                    files_to_return.append({'_id': file.replace('.xml', ''), 'file_name': info.get('file_name')})
+                    file_id = file.replace('.xml', '')
+                    info = mongo.meta.find_one({'_id': ObjectId(file_id)}, {'_id': 0, 'content': 0})
+                    files_to_return.append({
+                        '_id': file_id, 
+                        'file_name': info.get('file_name'),
+                        'path': f'/highlight?attribute={attr}&value={value}'
+                        })
 
         return {'status': 0, 'docs': files_to_return}, 200
     except Exception as e:

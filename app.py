@@ -9,6 +9,7 @@ from api.process_with_word_and_tag import get_docs_with_word_and_tag
 from api.highlight_with_attribute import highlight_doc_with_attribute, highlight_doc_with_tag
 from api.get_attr_values import get_attr_values
 from api.get_file_by_id import *
+from api.get_docs_with_parent_child import *
 
 app = Flask(__name__)
 env = init_modules()
@@ -65,6 +66,13 @@ def get_by_attr_values():
     value = request.args.get("value")
 
     return get_attr_values(env, attr, value)
+
+@app.route('/parentchild', methods=['GET'])
+def get_docs_with_tags_parent_child():
+    parent = request.args.get("parent")
+    child = request.args.get("child")
+
+    return get_docs_with_parent_child(env, parent, child)
 
 
 # Highlight an existent XML file that contains a given attribute X with a given value Y

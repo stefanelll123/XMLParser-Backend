@@ -1,11 +1,16 @@
 from util.constants import *
+from bson.objectid import ObjectId
 
 def get_file_by_id(env, file_id):
     try:
-        with open(f"{PATH}/{file_id}.xml") as file:
-            file_content = file.read()
-    except OSError:
-        return {'status': 0, 'error': 'File not found.'}, 404
-    except:
+        mongo = env.get('mongo')
+
+        file = mongo.meta.find_one({'_id': ObjectId(file_id)})
+        content = file.get('content')
+
+        return {
+            "_id": file_id, 
+            "content": content
+        }, 200
+    except Exception as e:
         return {"error": "An error ocurred"}, 500
-    return {"_id": file_id, "content": file_content}, 200

@@ -53,7 +53,7 @@ API Helper
     GET /search?tag_name=[tag]&word=[word]
      
     
-    # Highlight an existent XML file that contains a given attribute X with a given value Y
+    # Highlight an existent XML tag that contains a given attribute X with a given value Y
     GET /highlight?id=[id]&attribute=[attribute]&value=[value]
     Returns: 
         + 404 - id-ul nu exista
@@ -61,9 +61,19 @@ API Helper
         + 200 - {"status": 0, "content": [highlighted_content] }
     
     
+    # Highlight an existent XML tag
+    GET /highlight?id=[id]&tag=[tag]
+    Returns: 
+        + 404 - id-ul nu exista
+        + 204 - id-ul exista dar nu s-a indeplinit conditia [attribute x = value Y]
+        + 200 - {"status": 0, "content": [highlighted_content] }
+        
+        
     # Get documents by attribute with assigned value
     GET /docs?attribute=[attribute]&value=[value]
     Returns:
         + 500 - {'error': 'Could not process files'}
         + 200 - {'status': 0, 'docs': [files]}
+    
+    
     

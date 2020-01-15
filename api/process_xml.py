@@ -1,5 +1,4 @@
 import xml.etree.ElementTree as ET
-from util.constants import *
 from util.utils import *
 
 
@@ -19,14 +18,8 @@ def process_xml(env, xml_string, file_name):
     try:
         mongo = env.get('mongo')
 
-        inserted_meta = mongo.meta.insert_one(meta)
-        file_name_with_id = inserted_meta.inserted_id
+        mongo.meta.insert_one(meta)
         mongo.text.insert_one(text_info)
-
-        with open(f'{PATH}/{file_name_with_id}.xml', 'x') as xml_file:
-            xml_file.write(xml_string)
-    except OSError:
-        return {'error': f'{file_name} already exists'}, 500
     except Exception as e:
         return {'error': 'Could not insert XML data'}, 500
 

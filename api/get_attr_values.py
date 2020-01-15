@@ -4,7 +4,6 @@ import xml.etree.ElementTree as ET
 from util.constants import *
 from bson.objectid import ObjectId
 
-
 def contains(content, attr, value):
     root = ET.fromstring(content)
     result = root.findall(f".//*[@{attr}='{value}']")

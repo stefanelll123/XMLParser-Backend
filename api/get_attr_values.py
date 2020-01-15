@@ -32,8 +32,8 @@ def get_attr_values(env, attr, value):
                     files_to_return.append({
                         '_id': file_id, 
                         'file_name': info.get('file_name'),
-                        'path': f'/highlight?attribute={attr}&value={value}'
-                        })
+                        'path': f'/highlight?attribute={attr}&value={value}&_id={file_id}'
+                    })
 
         return {'status': 0, 'docs': files_to_return}, 200
     except Exception as e:

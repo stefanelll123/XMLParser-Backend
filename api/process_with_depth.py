@@ -11,7 +11,12 @@ def get_docs_with_depth(env, depth):
 
         new_docs = list()
         for doc in docs:
-            new_docs.append({"_id": str(doc.get("_id")), "file_name": doc.get("file_name")})
+            file_id = str(doc.get("_id"))
+            new_docs.append({
+                "_id": file_id, 
+                "file_name": doc.get("file_name"),
+                'path': f'/files?file_id={file_id}'
+            })
 
         return {'status': 0, 'docs': new_docs}, 200
     except:

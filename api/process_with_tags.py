@@ -10,8 +10,9 @@ def get_docs_with_tag_name(env, tag_name):
         docs = list(mongo.meta.find({'attributes': {'$eq': tag_name}}, {'file_name': 1, '_id': 1}))
         new_docs = list()
         for doc in docs:
+            file_id = str(doc.get("_id"))
             new_docs.append({
-                "_id": str(doc.get("_id")), 
+                "_id": file_id, 
                 "file_name": doc.get("file_name"),
                 'path': f'/highlight?tag={tag_name}&_id={file_id}'
             })

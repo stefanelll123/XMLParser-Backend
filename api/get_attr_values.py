@@ -18,22 +18,19 @@ def contains(content, attr, value):
 def get_attr_values(env, attr, value):
     try:
         mongo = env.get('mongo')
-        xml_files = os.listdir(f'{PATH}')
+        xml_files = mongo.meta.find()
         files_to_return = []
 
         for file in xml_files:
-            if file.endswith('.xml'):
-                f = open(f'{PATH}/{file}', "r")
-                content = f.read()
+            content = file.get('content')
 
-                if contains(content, attr, value):
-                    file_id = file.replace('.xml', '')
-                    info = mongo.meta.find_one({'_id': ObjectId(file_id)}, {'_id': 0, 'content': 0})
-                    files_to_return.append({
-                        '_id': file_id, 
-                        'file_name': info.get('file_name'),
-                        'path': f'/highlight?attribute={attr}&value={value}&_id={file_id}'
-                    })
+            if contains(content, attr, value):
+                file_id = str(file.get('_id'))
+                files_to_return.append({
+                    '_id': file_id, 
+                    'file_name': file.get('file_name'),
+                    'path': f'/highlight?attribute={attr}&value={value}&_id={file_id}'
+                })
 
         return {'status': 0, 'docs': files_to_return}, 200
     except Exception as e:

@@ -8,6 +8,7 @@ from api.process_with_depth import get_docs_with_depth
 from api.process_with_word_and_tag import get_docs_with_word_and_tag
 from api.highlight_with_attribute import highlight_doc_with_attribute, highlight_doc_with_tag
 from api.get_attr_values import get_attr_values
+from api.get_file_by_id import *
 
 app = Flask(__name__)
 env = init_modules()
@@ -83,6 +84,11 @@ def highlight_with_attribute():
 
     return highlight_doc_with_attribute(file_id, attribute, value)
 
+@app.route('/files', methods=['GET'])
+def get_file():
+    file_id = request.args.get("file_id")
+
+    return get_file_by_id(env, file_id)
 
 # Run
 if __name__ == '__main__':

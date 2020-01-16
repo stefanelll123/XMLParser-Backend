@@ -76,19 +76,21 @@ def highlight_with_attribute():
 
     # if tag is set
     if tag:
-        return highlight_doc_with_tag(file_id, tag)
+        return highlight_doc_with_tag(env, file_id, tag)
 
     # if tag is not set
     attribute = request.args.get('attribute')
     value = request.args.get('value')
 
-    return highlight_doc_with_attribute(file_id, attribute, value)
+    return highlight_doc_with_attribute(env, file_id, attribute, value)
+
 
 @app.route('/files', methods=['GET'])
 def get_file():
     file_id = request.args.get("file_id")
 
     return get_file_by_id(env, file_id)
+
 
 # Run
 if __name__ == '__main__':

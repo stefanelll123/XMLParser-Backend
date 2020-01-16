@@ -1,8 +1,9 @@
 import re
 from util.constants import PATH
+from bson.objectid import ObjectId
 
 
-def highlight_doc_with_tag(file_id, tag):
+def highlight_doc_with_tag(env, file_id, tag):
     # create the search string [tag] and [/tag]
     search_string = [
         f'&lt;{tag}',
@@ -10,11 +11,20 @@ def highlight_doc_with_tag(file_id, tag):
     ]
 
     # read file
+    mongo = env.get('mongo')
+
     try:
-        file = open(f'{PATH}/{file_id}.xml', 'r')
-        content = file.read()
-    except OSError:
+        file = mongo.meta.find_one({'_id': ObjectId(file_id)})
+        content = file.get('content')
+    except Exception as e:
+        print(e)
         return {'status': 0, 'error': 'File not found.'}, 404
+
+    # try:
+    #     file = open(f'{PATH}/{file_id}.xml', 'r')
+    #     content = file.read()
+    # except OSError:
+    #     return {'status': 0, 'error': 'File not found.'}, 404
 
     # replace '<' with &lt; and '>' with '&gt;'
     # so the browser will not interpret as html
@@ -24,7 +34,8 @@ def highlight_doc_with_tag(file_id, tag):
     # if file meets the condition
     if search_string[0] in content:
         # add the highlight as an html styled div
-        highlighted = content.replace(search_string[0], f'<div style=\'background-color: yellow\' >{search_string[0]}')
+        highlighted = content.replace(search_string[0],
+                                      f'<div style=\'color:red; font-weight: bold;\' >{search_string[0]}')
         highlighted = highlighted.replace(search_string[1], f'{search_string[1]}</div>')
 
         # return result
@@ -34,16 +45,23 @@ def highlight_doc_with_tag(file_id, tag):
     return {'status': 0}, 204
 
 
-def highlight_doc_with_attribute(file_id, attribute, value):
+def highlight_doc_with_attribute(env, file_id, attribute, value):
     # create the search string [attribute="value"]
     search_string = f'{attribute}="{value}"'
 
     # read file
+    mongo = env.get('mongo')
+
     try:
-        file = open(f'{PATH}/{file_id}.xml', 'r')
-        content = file.read()
-    except OSError:
+        file = mongo.meta.find_one({'_id': ObjectId(file_id)})
+        content = file.get('content')
+    except Exception as e:
         return {'status': 0, 'error': 'File not found.'}, 404
+    # try:
+    #     file = open(f'{PATH}/{file_id}.xml', 'r')
+    #     content = file.read()
+    # except OSError:
+    #     return {'status': 0, 'error': 'File not found.'}, 404
 
     # replace '<' with &lt; and '>' with '&gt;'
     # so the browser will not interpret as html
@@ -53,7 +71,8 @@ def highlight_doc_with_attribute(file_id, attribute, value):
     # if file meets the condition
     if search_string in content:
         # replace all
-        highlighted = content.replace(search_string, f'{search_string} style="background-color: yellow;" ')
+        highlighted = content.replace(search_string,
+                                      f'<div style=\'color: red; font-weight:bold;\'>{search_string}</div>')
 
         # return result
         return {'status': 0, 'content': highlighted}, 200

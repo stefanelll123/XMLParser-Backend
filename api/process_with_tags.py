@@ -14,7 +14,7 @@ def get_docs_with_tag_name(env, tag_name):
             new_docs.append({
                 "_id": file_id, 
                 "file_name": doc.get("file_name"),
-                'path': f'/files?file_id={file_id}'
+                'path': f'/highlight?_id={file_id}&tag={tag_name}'
             })
 
         return {'status': 0, 'docs': new_docs}, 200

@@ -1,11 +1,12 @@
+import re
 from util.constants import PATH
 
 
 def highlight_doc_with_tag(file_id, tag):
-    # create the search string [tag]
+    # create the search string [tag] and [/tag]
     search_string = [
-        f'<{tag}>',
-        f'<{tag} '
+        f'&lt;{tag}',
+        f'&lt;/{tag}&gt;'
     ]
 
     # read file
@@ -15,14 +16,16 @@ def highlight_doc_with_tag(file_id, tag):
     except OSError:
         return {'status': 0, 'error': 'File not found.'}, 404
 
+    # replace '<' with &lt; and '>' with '&gt;'
+    # so the browser will not interpret as html
+    content = content.replace('<', '&lt;')
+    content = content.replace('>', '&gt;')
+
     # if file meets the condition
-    if search_string[0] in content or search_string[1] in content:
-        # replace all
-        highlighted = content.replace(search_string[1], f'{search_string[1]}style="background-color: yellow;" ')
-        highlighted = highlighted.replace(
-            search_string[0],
-            f'{search_string[0][:-1]} style="background-color: yellow;">'
-        )
+    if search_string[0] in content:
+        # add the highlight as an html styled div
+        highlighted = content.replace(search_string[0], f'<div style=\'background-color: yellow\' >{search_string[0]}')
+        highlighted = highlighted.replace(search_string[1], f'{search_string[1]}</div>')
 
         # return result
         return {'status': 0, 'content': highlighted}, 200
@@ -42,10 +45,15 @@ def highlight_doc_with_attribute(file_id, attribute, value):
     except OSError:
         return {'status': 0, 'error': 'File not found.'}, 404
 
+    # replace '<' with &lt; and '>' with '&gt;'
+    # so the browser will not interpret as html
+    content = content.replace('<', '&lt;')
+    content = content.replace('>', '&gt;')
+
     # if file meets the condition
     if search_string in content:
         # replace all
-        highlighted = content.replace(search_string, f'style="background-color: yellow;" {search_string}')
+        highlighted = content.replace(search_string, f'{search_string} style="background-color: yellow;" ')
 
         # return result
         return {'status': 0, 'content': highlighted}, 200

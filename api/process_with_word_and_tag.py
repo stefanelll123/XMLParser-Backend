@@ -17,11 +17,11 @@ def get_docs_with_word_and_tag(env, word, tag_name):
 
         if word:
             for doc in docs:
+                file_id = str(doc.get("_id"))
                 for property in doc:
                     if property != "_id" and property != "file_name":
                         for text in doc[property]:
                             if word in text:
-                                file_id = str(doc.get("_id"))
                                 new_docs.append({
                                     "_id": file_id, 
                                     "file_name": str(doc.get("file_name")),

@@ -28,7 +28,7 @@ def get_attr_values(env, attr, value):
                 files_to_return.append({
                     '_id': file_id, 
                     'file_name': file.get('file_name'),
-                    'path': f'/files?file_id={file_id}'
+                    'path': f'/highlight?_id={file_id}&attribute={attr}&value={value}'
                 })
 
         return {'status': 0, 'docs': files_to_return}, 200

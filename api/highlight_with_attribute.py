@@ -35,8 +35,8 @@ def highlight_doc_with_tag(env, file_id, tag):
     if search_string[0] in content:
         # add the highlight as an html styled div
         highlighted = content.replace(search_string[0],
-                                      f'<div style=\'color:red; font-weight: bold;\' >{search_string[0]}')
-        highlighted = highlighted.replace(search_string[1], f'{search_string[1]}</div>')
+                                      f'<span style=\'color:red; font-weight: bold;\' >{search_string[0]}')
+        highlighted = highlighted.replace(search_string[1], f'{search_string[1]}</span>')
 
         # return result
         return {'status': 0, 'content': highlighted}, 200
@@ -56,6 +56,7 @@ def highlight_doc_with_attribute(env, file_id, attribute, value):
         file = mongo.meta.find_one({'_id': ObjectId(file_id)})
         content = file.get('content')
     except Exception as e:
+        print(e)
         return {'status': 0, 'error': 'File not found.'}, 404
     # try:
     #     file = open(f'{PATH}/{file_id}.xml', 'r')
@@ -72,7 +73,7 @@ def highlight_doc_with_attribute(env, file_id, attribute, value):
     if search_string in content:
         # replace all
         highlighted = content.replace(search_string,
-                                      f'<div style=\'color: red; font-weight:bold;\'>{search_string}</div>')
+                                      f'<span style=\'color: red; font-weight:bold;\'>{search_string}</span>')
 
         # return result
         return {'status': 0, 'content': highlighted}, 200

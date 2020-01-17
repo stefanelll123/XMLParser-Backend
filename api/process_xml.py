@@ -18,7 +18,10 @@ def process_xml(env, xml_string, file_name):
     try:
         mongo = env.get('mongo')
 
-        mongo.meta.insert_one(meta)
+        info = mongo.meta.insert_one(meta)
+        file_id = info.inserted_id
+
+        print(file_id)
         mongo.text.insert_one(text_info)
     except Exception as e:
         return {'error': 'Could not insert XML data'}, 500
